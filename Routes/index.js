@@ -1,64 +1,17 @@
 var express= require("express")
 var route= express.Router()
+var userController= require('../Controller/userController')
+var validate=require("../Middl/validate");
 
+route.get("/show", userController.show);
+route.post("/add",validate, userController.add);
+route.get("/showuser", userController.showuser);
+route.get("/showuserid/:id", userController.showuserid);
+route.get("/showusername/:name", userController.showusername);
+route.put("/update/:id",userController.update);
+route.delete("/deletee/:id",userController.deletee);
 
-
-route.get("/show", function (req, res)
-{
-    console.log("notre class 2CINFO1");
+route.get("/chatroute", function(req, res){
+    res.render('chat')//nom page twig
 });
-route.get("/add/:username/:email/:cin", function (req, res)
-{
-new User({
-    username:req.params.username,
-    email:req.params.email,
-    cin:req.params.cin}).save();
-    res.send("test");
-});
-
-route.post("/add", );
-route.get("/showuser", async function(req,res){
-    try{
-    const user= await User.find();
-    res.json(user);}
-    catch(err){
-        res.status(400).send(err)
-    }
-});
-route.get("/showuser/:id", async function(req,res){
-    try{
-    const user= await User.findById(req.params.id);
-    res.json(user);}
-    catch(err){
-        res.status(400).send(err)
-    }
-});
-route.get("/showusername/:name", async function(req,res){
-    try{
-    const user= await User.findOne(req.params.username);
-    res.json(user);}
-    catch(err){
-        res.status(400).send(err)
-    }
-});
-route.put("/update/:id",async function (req, res)
-{
-   try{ 
-    const user=await User.findByIdAndUpdate(req.params.id,req.body, {new:true});
-    res.status(200).json(user);
-
-}catch(err){
-    res.status(400).send(err)
-}
-});
-route.delete("/delete/:id",async function (req, res)
-{
-   try{ 
-    const user=await User.findByIdAndDelete(req.params.id);
-    res.status(200).send("deleted")
-
-}catch(err){
-    res.status(400).send(err)
-}
-});
-module.exports=route
+module.exports= route;
