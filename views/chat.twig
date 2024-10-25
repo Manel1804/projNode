@@ -4,23 +4,37 @@
 </script>
 <body>
 <label for=""> Message </label>
-<input type="text" id="m">
+<input type="text" id="m" onkeyup="typing()">
 <input type="submit" onclick="send()">
 
 <script>
 var socket=io();
+name=prompt("saisir votre nom: ")
 socket.on("abc", (data) =>{
     p=document.createElement("p");
     p.innerText=(data)
     document.body.append(p)
 });
 
+socket.on("typing", (data) =>{
+    p=document.createElement("p");
+    p.innerText=("l'utilisateur "+name+" est entraint d'ecrir...")
+    document.body.append(p)
+});
+
+
+
+
 x=document.getElementById("m");
 function send ()
 {
     
     console.log('notre valeur est '+x.value)
-    socket.emit("abc", x.value)
+    socket.emit("abc", x.value);
+}
+function typing()
+{
+    socket.emit("typing", name);
 }
 
 </script>
