@@ -20,6 +20,13 @@ const server = http.createServer(app, console.log("server run"))
 const io=require("socket.io")(server)
 io.on("connection",(socket)=>{
     console.log('user connected');
+    socket.on("abc",(data)=>{
+console.log("notre message serveur"+data);
+io.emit("abc", data)
+    });
+
+
+    
     socket.on("disconnect", () => {
         console.log ("disconnected")
 });

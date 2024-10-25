@@ -3,8 +3,26 @@
 <script src="/socket.io/socket.io.js">
 </script>
 <body>
+<label for=""> Message </label>
+<input type="text" id="m">
+<input type="submit" onclick="send()">
+
 <script>
 var socket=io();
+socket.on("abc", (data) =>{
+    p=document.createElement("p");
+    p.innerText=(data)
+    document.body.append(p)
+});
+
+x=document.getElementById("m");
+function send ()
+{
+    
+    console.log('notre valeur est '+x.value)
+    socket.emit("abc", x.value)
+}
+
 </script>
 <body>
 </html>
